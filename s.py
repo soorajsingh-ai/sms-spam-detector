@@ -96,11 +96,8 @@ print("Accuracy" , accuracy_score (y_test, y_pred))
 print(classification_report(y_test,y_pred))
 cm = confusion_matrix(y_test,y_pred)
 print(cm)
-#------------------------------------------------
-
-#UI
 
 import pickle
 
-pickle.dump(model, open("model.pkl", "wb"))
-pickle.dump(cv, open("vectorizer.pkl", "wb"))
+pickle.dump(model, open('model.pkl', 'wb'))
+pickle.dump(cv, open('vectorizer.pkl', 'wb'))

@@ -1,32 +1,37 @@
 import streamlit as st
 import pickle
-from sklearn.feature_extraction.text import CountVectorizer
-from sklearn.naive_bayes import MultinomialNB
+import re
 
-# Page config
-st.set_page_config(page_title="SMS Spam Detector", page_icon="📩")
+# load model & vectorizer
+model = pickle.load(open('model.pkl', 'rb'))
+vectorizer = pickle.load(open('vectorizer.pkl', 'rb'))
 
-# Load model (ONLY ONCE)
-model = pickle.load(open("model.pkl", "rb"))
-vectorizer = pickle.load(open("vectorizer.pkl", "rb"))
+# text cleaning function (same as training)
+def clean_text(text):
+    text = text.lower()
+    text = re.sub('[^a-zA-Z0-9 ]', '', text)
+    return text
 
-# Title
-st.markdown("<h1 style='text-align: center;'>📩 SMS Spam Detection</h1>", unsafe_allow_html=True)
-st.write("")
+# UI
+st.title("📩 AI Spam Detector")
 
-# Input
-input_sms = st.text_area("📩 Enter your message here:")
+msg = st.text_area("Enter message below to check spam here")
 
-# Button
 if st.button("Predict"):
+    if msg.strip() != "":
+        # clean text
+        clean_msg = clean_text(msg)
 
-    # Transform
-    transformed_sms = vectorizer.transform([input_sms])
+        # vectorize
+        vector = vectorizer.transform([clean_msg])
 
-    # Predict
-    result = model.predict(transformed_sms)[0]
+        # predict
+        result = model.predict(vector)[0]
 
-    if result == 1:
-        st.error("🚨 Spam Message")
+        # output
+        if result == 1:
+            st.error("🚨 This is SPAM message")
+        else:
+            st.success("✅ This is HAM (Normal) message")
     else:
-        st.success("✅ Normal Message (Ham)")
+        st.warning("⚠️ Please enter a message first")
