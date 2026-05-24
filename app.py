@@ -25,6 +25,6 @@ if st.button("🔍 Predict"):
         result = model.predict(transformed_sms)[0]
 
         if result == 1:
-            st.error(f"🚨 Spam Message\n\nConfidence:")
+            st.error(f"🚨 Spam Message:")
         else:
-            st.success(f"✅ Not Spam (Ham)\n\nConfidence:")
+            st.success(f"✅ Not Spam (Normal Message):")
