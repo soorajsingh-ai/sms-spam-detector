@@ -1,6 +1,7 @@
 import streamlit as st
 import pickle
-
+from sklearn.feature_extraction.text import CountVectorizer
+from sklearn.naive_bayes import MultinomialNB
 
 # Page config
 st.set_page_config(page_title="SMS Spam Detector", page_icon="📩")
