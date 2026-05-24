@@ -1,6 +1,6 @@
 import streamlit as st
 import pickle
-import sklearn  # जरूरी है
+
 
 # Page config
 st.set_page_config(page_title="SMS Spam Detector", page_icon="📩")
